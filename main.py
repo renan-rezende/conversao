@@ -75,7 +75,6 @@ async def generate_and_return_file():
         # Ler o arquivo XLSX (assumindo que as colunas são Data, Hora, Temperatura, Umidade, Pressão, etc.)
         df = pd.read_excel(xlsx_file)
         df['date'] = df['date'].astype(str)
-        df['cloud_cover'] = df['date'].astype(str)
     
     
         # Cria novas 3 colunas para de ano, Mês e Dia (separa a coluna "time" em 3)
@@ -83,7 +82,6 @@ async def generate_and_return_file():
         df['MO'] = df['date'].str.slice(5, 7)    # Mês
         df['DA'] = df['date'].str.slice(8, 10)   # Dia
         df['HR'] = df['date'].str.slice(11, 13)  # Hora
-        df['cloud_cover'] = df['cloud_cover'].str.slice(2, 4)# Hora
         
         df = df.drop(columns=['date'])
     
@@ -95,7 +93,7 @@ async def generate_and_return_file():
     
             for index, row in df.iterrows():
     
-                sam.write(f"{''} {row['YR']:>2} {row['MO']:>2} {int(row['DA']):>2} {int(row['HR']):>2} {'0 9999 9999':>} {row['shortwave_radiation']:>4} {'?0 9999 ?0 9999 ?0'} {row['cloud_cover']:>2} {row['cloud_cover']:>2} {row['temperature_2m']:>5} {'9999.'} {row['relative_humidity_2m']:>3} {int(row['surface_pressure'])} {int(row['wind_direction_10m']):>3} {row['wind_speed_10m']:>5} 99999. 999999 999999999 9999 99999. 9999 999      0\n")
+                sam.write(f"{''} {row['YR']:>2} {row['MO']:>2} {int(row['DA']):>2} {int(row['HR']):>2} {'0 9999 9999':>} {row['shortwave_radiation']:>4} {'?0 9999 ?0 9999 ?0'} {row['cloud_cover']/10:>2.0f} {row['cloud_cover']/10:>2.0f} {row['temperature_2m']:>5} {'9999.'} {row['relative_humidity_2m']:>3} {int(row['surface_pressure'])} {int(row['wind_direction_10m']):>3} {row['wind_speed_10m']:>5} 99999. 999999 999999999 9999 99999. 9999 999      0\n")
     
     # Salvar o DataFrame como arquivo Excel
     hourly_dataframe['date'] = hourly_dataframe['date'].dt.tz_localize(None)
