@@ -1,4 +1,3 @@
-
 import openmeteo_requests
 import requests_cache
 from retry_requests import retry
@@ -6,7 +5,6 @@ import pandas as pd
 import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
-
 
 app = FastAPI()
 
@@ -55,10 +53,10 @@ async def generate_and_return_file():
     hourly_shortwave_radiation = hourly.Variables(7).ValuesAsNumpy()
 
     hourly_data = {"date": pd.date_range(
-    	start = pd.to_datetime(hourly.Time(), unit = "s", utc = True).tz_convert("America/Sao_Paulo"),
-    	end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True).tz_convert("America/Sao_Paulo"),
-    	freq = pd.Timedelta(seconds = hourly.Interval()),
-    	inclusive = "left"
+        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True).tz_convert("America/Godthab"),
+        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True).tz_convert("America/Godthab"),
+        freq = pd.Timedelta(seconds = hourly.Interval()),
+        inclusive = "left"
     )}
     hourly_data["temperature_2m"] = hourly_temperature_2m
     hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
@@ -76,7 +74,6 @@ async def generate_and_return_file():
     def xlsx_to_sam(xlsx_file, sam_file):
         # Ler o arquivo XLSX (assumindo que as colunas são Data, Hora, Temperatura, Umidade, Pressão, etc.)
         df = pd.read_excel(xlsx_file)
-        df.columns = df.columns.str.strip()
         df['date'] = df['date'].astype(str)
 
 
@@ -91,11 +88,11 @@ async def generate_and_return_file():
         with open(sam_file, 'w') as sam:
 
             sam.write("~    1 ANCHIETA               ES  -3  S20 48  W040 36    10\n")
-            sam.write(f"{'~'}{'YR':<2} {'MO':<2} {'DA':<2} {'HR':<2} {'I':<4} {'1':<4} {'2':<2} {'3':<7} {'4':<7} {'5':<7} {'6':<4} {'7':<3} {'8':<4} {'9':<5} {'10':<2} {'11':<6} {'12':<5} {'13':<5} {'14':<6} {'15':<6} {'16':<9} {'17':<4} {'18':<6} {'19':<4} {'20':<8} {'21'}\n")
-            
+            sam.write(f"~YR MO DA HR I    1    2       3       4       5  6  7     8     9  10   11  12    13     14     15        16   17     18   19  20      21\n")
+
             for index, row in df.iterrows():
 
-                sam.write(f"{''} {row['YR']:<2} {row['MO']:<2} {row['DA']:<2} {row['HR']:<2} {'0 9999 9999':<12} {row['shortwave_radiation']:<4} {'?0 9999 ?0 9999 ?0'} {row['cloud_cover']:<4} {row['cloud_cover']:<3} {row['temperature_2m']} {'9999.'} {row['relative_humidity_2m']} {row['surface_pressure']} {row['wind_direction_10m']:<5} {row['wind_speed_10m']:<5} 99999. 999999 999999999 9999 99999. 9999 999      0\n")
+                sam.write(f"{''} {row['YR']:>2} {row['MO']:>2} {int(row['DA']):>2} {int(row['HR']):>2} {'0 9999 9999':>} {row['shortwave_radiation']:>4} {'?0 9999 ?0 9999 ?0'} {row['cloud_cover']:>3} {row['cloud_cover']:>3} {row['temperature_2m']} {'9999.'} {row['relative_humidity_2m']} {int(row['surface_pressure'])} {int(row['wind_direction_10m']):>3} {row['wind_speed_10m']:>5} 99999. 999999 999999999 9999 99999. 9999 999      0\n")
 
     # Salvar o DataFrame como arquivo Excel
     hourly_dataframe['date'] = hourly_dataframe['date'].dt.tz_localize(None)
@@ -119,4 +116,6 @@ async def generate_and_return_file():
         media_type= "application/octet-stream",
         filename= "dados_meteorologicos.sam"
     )
+
+
 
