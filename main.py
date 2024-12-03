@@ -55,10 +55,10 @@ async def generate_and_return_file():
     hourly_shortwave_radiation = hourly.Variables(7).ValuesAsNumpy()
 
     hourly_data = {"date": pd.date_range(
-        start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
-        end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
-        freq = pd.Timedelta(seconds = hourly.Interval()),
-        inclusive = "left"
+    	start = pd.to_datetime(hourly.Time(), unit = "s", utc = True).tz_convert("America/Sao_Paulo"),
+    	end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True).tz_convert("America/Sao_Paulo"),
+    	freq = pd.Timedelta(seconds = hourly.Interval()),
+    	inclusive = "left"
     )}
     hourly_data["temperature_2m"] = hourly_temperature_2m
     hourly_data["relative_humidity_2m"] = hourly_relative_humidity_2m
