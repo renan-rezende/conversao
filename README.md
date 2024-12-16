@@ -4,7 +4,7 @@ Este projeto é uma API desenvolvida em Python que utiliza a API da [Open meteo]
 
 ## Objetivo
 
-Antes da implementação desta solução, os colaboradores precisavam:
+Antes da implementação desta solução:
 
 1. Acessar manualmente o site do Open-Meteo.
 2. Baixar os dados meteorológicos necessários.
