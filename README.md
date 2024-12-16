@@ -85,7 +85,7 @@ uvicorn main:app --reload
 ## Benefícios
 
 - **Redução de tempo:** Automatiza um processo que anteriormente demandava várias etapas manuais.
-- **Precisão:** Garante a formatação correta e compatibilidade com o software SAMSON.
+- **Precisão:** Garante a formatação correta e compatibilidade com o software que utiliza o arquivo .sam.
 - **Escalabilidade:** Permite ajustar os parâmetros para diferentes tipos de dados meteorológicos e locais.
 
 ---
