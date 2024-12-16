@@ -95,8 +95,3 @@ uvicorn main:app --reload
 Contribuições são bem-vindas! Para sugerir melhorias ou corrigir bugs, envie um *pull request* ou abra uma *issue*.
 
 ---
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
