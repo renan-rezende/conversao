@@ -67,7 +67,7 @@ uvicorn main:app --reload
 
 ### 3. Resultado:
 
-- Acesse a rota `/generate-file` para gerar e baixar o arquivo `.sam`.
+- Acesse a rota `/generate-file`(https://conversao.azurewebsites.net/generate-file) para gerar e baixar o arquivo `.sam`.
 
 ---
 
