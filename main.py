@@ -11,7 +11,7 @@ app = FastAPI()
 @app.get("/generate-file")
 async def generate_and_return_file():
 
-    ###################################### ----------- A.P.I ----------- ######################################
+    ###################################### ----------- A.P.I -- O.P.E.N -- M.E.T.E.O.R ----------- ######################################
 
     # Setup the Open-Meteo API client with cache and retry on error
     cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
